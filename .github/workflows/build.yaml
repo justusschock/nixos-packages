@@ -10,7 +10,7 @@ jobs:
 
     strategy:
       matrix:
-        system: 
+        os: 
           - "ubuntu-latest" # for "x86_64-linux"
           - "macos-latest" # for "aarch64-darwin"
         package: [ "go" ]
