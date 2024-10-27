@@ -1,16 +1,15 @@
 { pkgs ? import <nixpkgs> {} }:
 
-
 let
   goVersion = "1.21.9"; # Specify your desired version
 
+  # Use fetchFromGitHub with a fake hash for development
   goSrc = pkgs.fetchFromGitHub {
     owner = "golang";
     repo = "go";
     rev = "go${goVersion}";
-    sha256 = pkgs.lib.fakeSha256;
+    sha256 = pkgs.lib.fakeSha256;  # Use fakeSha256 to bypass hash checks
   };
-  
 
 in
 pkgs.stdenv.mkDerivation {
@@ -19,9 +18,17 @@ pkgs.stdenv.mkDerivation {
 
   src = goSrc;
 
+  # Phases to handle the build and installation
+  phases = [ "unpackPhase" "buildPhase" "installPhase" ];
+
   installPhase = ''
     mkdir -p $out/bin
-    cp -r src/* $out/bin/
+    cp -r src/* $out/bin/  # Adjust this if the structure differs
+  '';
+
+  # Optionally, you can add a build command if needed
+  buildCommand = ''
+    echo "Building Go version ${goVersion}"
   '';
 
   meta = with pkgs.lib; {
