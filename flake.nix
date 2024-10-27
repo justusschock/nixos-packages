@@ -1,14 +1,12 @@
 {
   description = "My custom Nix package collection for multiple architectures";
 
-  inputs.nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable"; # Adjust as needed
+  inputs.nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
   outputs = { self, nixpkgs }: let
     # Define a function to build packages for a given system
     mkPackages = system: {
-      go = nixpkgs.legacyPackages.${system}.callPackage ./packages/go/default.nix {
-        inherit (nixpkgs.legacyPackages.${system}) pkgs;
-      };
+      go = nixpkgs.legacyPackages.${system}.callPackage ./packages/go/default.nix { };
     };
   in {
     # Define outputs for different architectures
