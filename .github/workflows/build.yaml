@@ -27,4 +27,4 @@ jobs:
 
       - name: Build packages
         run: |
-          nix build .#packages.${{ matrix.system }}.${{ matrix.package }}
+          nix build .#packages.${{ matrix.package }}
