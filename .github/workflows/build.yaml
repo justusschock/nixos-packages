@@ -1,4 +1,4 @@
-name: Build Pacakges
+name: Build Packages
 
 on:
   push: {}
@@ -6,15 +6,16 @@ on:
 
 jobs:
   build:
-    runs-on: ${{ matrix.os }}
+    runs-on: ${{ matrix.runner }}
 
     strategy:
       matrix:
-        system: 
-          - "ubuntu-latest" # for "x86_64-linux"
-          - "macos-latest" # for "aarch64-darwin"
-        package: [ "go" ]
-    
+        os:
+          - { runner: ubuntu-latest, os: "x86_64-linux" }
+          - { runner: macos-latest, os: "x86_64-darwin" }
+          - { runner: macos-latest, os: "aarch64-darwin" }
+        package: ["go"]  # List of packages
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -29,7 +30,6 @@ jobs:
         run: |
           nix flake show
 
-
-      - name: Build packages
+      - name: Build package
         run: |
-          nix build .#packages.${{ matrix.package }}
+          nix build .#packages.${{ matrix.os.os }}.${{ matrix.package }}
