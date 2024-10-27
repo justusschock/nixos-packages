@@ -10,11 +10,13 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
 
     strategy:
       matrix:
-        system: [ "x86_64-linux", "x86_64-darwin", "aarch64-darwin" ]
+        system: 
+          - "ubuntu-latest" # for "x86_64-linux"
+          - "macos-latest" # for "aarch64-darwin"
         package: [ "go" ]
     
     steps:
