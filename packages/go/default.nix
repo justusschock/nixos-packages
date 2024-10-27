@@ -5,7 +5,7 @@ let
   goSrc = pkgs.fetchFromGitHub {
     owner = "golang";
     repo = "go";
-    rev = "go${goVersion}.src";
+    rev = "go${goVersion}";
   };
 in
 pkgs.stdenv.mkDerivation {
