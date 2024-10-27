@@ -1,0 +1,32 @@
+name: Build Pacakges
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        system: [ "x86_64-linux", "x86_64-darwin", "aarch64-darwin" ]
+        package: [ "go" ]
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Nix
+        uses: cachix/install-nix-action@v15
+        with:
+          nix_config: |
+            experimental-features = nix-command flakes
+
+      - name: Build packages
+        run: |
+          nix build .#packages.${{ matrix.system }}.${{ matrix.package }}
