@@ -25,6 +25,11 @@ jobs:
           nix_config: |
             experimental-features = nix-command flakes
 
+      - name: Show available packages
+        run: |
+          nix flake show
+
+
       - name: Build packages
         run: |
           nix build .#packages.${{ matrix.package }}
