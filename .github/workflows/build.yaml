@@ -11,13 +11,8 @@ jobs:
 
     strategy:
       matrix:
-        include:
-          - runner: ubuntu-latest
-            os: "x86_64-linux"
-            package: "go"
-          - runner: macos-latest
-            os: "aarch64-darwin"
-            package: "go"
+        runner: ["ubuntu-latest", "macos-latest"]
+        package: ["go_1_21_9"]
 
     steps:
       - name: Checkout code
@@ -35,4 +30,4 @@ jobs:
 
       - name: Build package
         run: |
-          nix build .#packages.${{ matrix.os }}.${{ matrix.package }}
+          nix build .#${{ matrix.package }}
