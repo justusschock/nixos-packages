@@ -1,15 +1,24 @@
-{ pkgs ? import <nixpkgs> {} }:
-
 let
-  inherit (pkgs) stdenv;
+  # Import Nixpkgs with your overlay applied
+  nixpkgs = import <nixpkgs> {};
+  myOverlay = import ./packages/go/overlay.nix;
 
-  # Define the Go package
-  go = import ./packages/go/default.nix {
-    inherit pkgs;
+  # Apply the overlay
+  pkgs = import <nixpkgs> { 
+    overlays = [ 
+      ( import ./packages/go/overlay.nix )
+    ]; 
   };
 
+  # create a custom collection 
+  justusschock-packages = pkgs.buildEnv {
+    name = "justusschock-packages";
+    paths = [
+      pkgs.go_1_21_9 
+    ];
+  };
 in
-pkgs.buildEnv {
-  name = "justusschock-packages";
-  paths = [ go ];
+{
+  
+  inherit justusschock-packages;
 }
