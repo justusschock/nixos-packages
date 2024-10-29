@@ -3,12 +3,12 @@
 let
   goVersion = "1.21.9"; # Specify your desired version
 
-  # Use fetchFromGitHub with a fake hash for development
+  # Use fetchFromGitHub with a placeholder hash
   goSrc = pkgs.fetchFromGitHub {
     owner = "golang";
     repo = "go";
     rev = "go${goVersion}";
-    sha256 = pkgs.lib.fakeSha256;  # Use fakeSha256 to bypass hash checks
+    sha256 = lib.fakeSha256;  # Use fakeSha256 to get the actual hash
   };
 
 in
