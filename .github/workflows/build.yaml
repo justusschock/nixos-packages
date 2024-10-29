@@ -1,20 +1,19 @@
-name: Build Pacakges
+name: Build Packages
 
 on:
-  push: {}
+  push:
+    branches: [main]
   pull_request: {}
 
 jobs:
   build:
-    runs-on: ${{ matrix.os }}
+    runs-on: ${{ matrix.runner }}
 
     strategy:
       matrix:
-        os: 
-          - "ubuntu-latest" # for "x86_64-linux"
-          - "macos-latest" # for "aarch64-darwin"
-        package: [ "go" ]
-    
+        runner: ["ubuntu-latest", "macos-latest"]
+        package: ["go_1_21_9"]
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -25,6 +24,10 @@ jobs:
           nix_config: |
             experimental-features = nix-command flakes
 
-      - name: Build packages
+      - name: Show available packages
         run: |
-          nix build .#packages.${{ matrix.system }}.${{ matrix.package }}
+          nix flake show
+
+      - name: Build package
+        run: |
+          nix build .#${{ matrix.package }}
