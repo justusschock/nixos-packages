@@ -1,6 +1,7 @@
 { pkgs ? import <nixpkgs> {} }:
 
 let
+  lib = pkgs.lib;
   goVersion = "1.21.9"; # Specify your desired version
 
   # Use fetchFromGitHub with a placeholder hash
