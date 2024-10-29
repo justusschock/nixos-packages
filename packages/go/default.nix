@@ -9,7 +9,7 @@ let
     owner = "golang";
     repo = "go";
     rev = "go${goVersion}";
-    sha256 = lib.fakeSha256;  # Use fakeSha256 to get the actual hash
+    # sha256 = lib.fakeSha256;  # Use fakeSha256 to get the actual hash
   };
 
 in
