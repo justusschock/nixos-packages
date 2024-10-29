@@ -10,7 +10,7 @@ let
     owner = "golang";
     repo = "go";
     rev = "go${defaultGoVersion}";
-    sha256 = defaultGoSha;
+    sha256 = defaultGoSha256;
   };
 
 in
