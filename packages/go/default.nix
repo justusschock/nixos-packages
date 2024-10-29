@@ -2,20 +2,21 @@
 
 let
   lib = pkgs.lib;
-  goVersion = "1.21.9"; # Specify your desired version
+  defaultGoVersion = "1.21.9"; # Specify your desired version
+  defaultGoSha256 = "sha256-ET3WpMO0JssKER3l0Q2XfISjdCp2oQYnnzo77CZiC9Q=";
 
   # Use fetchFromGitHub with a placeholder hash
   goSrc = pkgs.fetchFromGitHub {
     owner = "golang";
     repo = "go";
-    rev = "go${goVersion}";
-    # sha256 = lib.fakeSha256;  # Use fakeSha256 to get the actual hash
+    rev = "go${defaultGoVersion}";
+    sha256 = defaultGoSha;
   };
 
 in
 pkgs.stdenv.mkDerivation {
   pname = "go";
-  version = goVersion;
+  version = defaultGoVersion;
 
   src = goSrc;
 
@@ -29,7 +30,7 @@ pkgs.stdenv.mkDerivation {
 
   # Optionally, you can add a build command if needed
   buildCommand = ''
-    echo "Building Go version ${goVersion}"
+    echo "Building Go version ${defaultGoVersion}"
   '';
 
   meta = with pkgs.lib; {
