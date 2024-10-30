@@ -1,0 +1,35 @@
+# nix build --file default.nix myEnv
+name: Build Examples
+
+on:
+  push:
+    branches: [main]
+  pull_request: {}
+
+jobs:
+  build-example-flake:
+    runs-on: ${{ matrix.runner }}
+
+    strategy:
+      matrix:
+        runner: ["ubuntu-latest", "macos-latest"]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Nix
+        uses: cachix/install-nix-action@v15
+        with:
+          nix_config: |
+            experimental-features = nix-command flakes
+
+      - name: Show available packages
+        run: |
+          nix flake show
+
+      - name: Build package
+        run: |
+          nix build .
+        working-directory: examples
+
