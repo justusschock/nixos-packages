@@ -32,7 +32,7 @@ jobs:
       - name: Build package
         run: |
           nix build .
-        workdir: examples/as_flake_in_flake
+        working-directory: examples/as_flake_in_flake
 
   build-no-flake-in-flake:
     runs-on: ${{ matrix.runner }}
@@ -58,7 +58,7 @@ jobs:
       - name: Build package
         run: |
           nix build .
-        workdir: examples/as_no_flake_in_flake
+        working-directory: examples/as_no_flake_in_flake
 
   build-no-flake-in-no-flake:
     runs-on: ${{ matrix.runner }}
@@ -84,4 +84,4 @@ jobs:
       - name: Build package
         run: |
           nix build --file default.nix myEnv
-        workdir: examples/as_no_flake_in_no-flake
+        working-directory: examples/as_no_flake_in_no-flake
