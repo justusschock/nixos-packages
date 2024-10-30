@@ -7,7 +7,6 @@ on:
   pull_request: {}
 
 jobs:
-
   build-flake-in-flake:
     runs-on: ${{ matrix.runner }}
 
@@ -32,56 +31,5 @@ jobs:
       - name: Build package
         run: |
           nix build .
-        working-directory: examples/as_flake_in_flake
+        working-directory: examples
 
-  build-no-flake-in-flake:
-    runs-on: ${{ matrix.runner }}
-
-    strategy:
-      matrix:
-        runner: ["ubuntu-latest", "macos-latest"]
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Set up Nix
-        uses: cachix/install-nix-action@v15
-        with:
-          nix_config: |
-            experimental-features = nix-command flakes
-
-      - name: Show available packages
-        run: |
-          nix flake show
-
-      - name: Build package
-        run: |
-          nix build .
-        working-directory: examples/as_no_flake_in_flake
-
-  build-no-flake-in-no-flake:
-    runs-on: ${{ matrix.runner }}
-
-    strategy:
-      matrix:
-        runner: ["ubuntu-latest", "macos-latest"]
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Set up Nix
-        uses: cachix/install-nix-action@v15
-        with:
-          nix_config: |
-            experimental-features = nix-command flakes
-
-      - name: Show available packages
-        run: |
-          nix flake show
-
-      - name: Build package
-        run: |
-          nix build --file default.nix myEnv
-        working-directory: examples/as_no_flake_in_no-flake
