@@ -10,7 +10,8 @@
     flake-utils.lib.eachDefaultSystem (system:
       let
         overlays = [
-          (import ./packages/go/overlay.nix)
+          (import ./packages/go/1.21.9/overlay.nix)
+          (import ./packages/go/1.23.4/overlay.nix)
         ];
         pkgs = import nixpkgs {
           inherit system;
@@ -20,6 +21,7 @@
       {
         packages = {
           go_1_21_9 = pkgs.go_1_21_9;
+          go_1_23_4 = pkgs.go_1_23_4;
         };
       });
 

@@ -1,5 +1,5 @@
 # Overlay to make go 1.21.9 available
-# This depends on the patches list from nixpkgs 24.05
+# This depends on the patches list from nixpkgs 24.05/24.11
 
 self: super: {
   go_1_21_9 = super.go.overrideAttrs (old: {
