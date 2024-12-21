@@ -12,7 +12,7 @@ jobs:
     strategy:
       matrix:
         runner: ["ubuntu-latest", "macos-latest"]
-        package: ["go_1_21_9"]
+        package: ["go_1_21_9", "go_1_23_4"]
 
     steps:
       - name: Checkout code
